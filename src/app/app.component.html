@@ -1,21 +1,50 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<h1>
+  Hello {{ title }}!
+</h1>
 
-<router-outlet></router-outlet>
+<form #formulario="ngForm">
+  <p>
+    <label for="">Nombre</label>
+    <input type="text" #nombre="ngModel" name="nombre" pattern="[a-zA-Z *]+" [(ngModel)]="persona.nombre" required>
+    <span *ngIf="nombre.invalid && nombre.touched" style="color:red"> Este campo es obligatorio </span>
+  </p>
+
+  <p>
+    <label for="">Apellido</label>
+    <input type="text" #apellido="ngModel" name="apellido" pattern="[a-z* ]+" [(ngModel)]="persona.apellido" required>
+    <span *ngIf="apellido.invalid && apellido.touched" style="color:red"> Este campo es obligatorio </span>
+  </p>
+
+  <p>
+    <label for="">Edad</label>
+    <input type="text" #edad="ngModel" name="edad" pattern="[0-9]" [(ngModel)]="persona.edad" required>
+    <span *ngIf="edad.invalid && edad.touched" style="color:red"> Solo alfanumericos </span>
+  </p>
+
+  <p>
+    <label for="">Profesión</label>
+    <input type="text" #profesion="ngModel" name="profesion" pattern="[a-z* ]+" [(ngModel)]="persona.profesion"
+      required>
+    <span *ngIf="profesion.invalid && profesion.touched" style="color:red"> Este campo es obligatorio </span>
+  </p>
+
+  <p>
+    <label for="">Activo</label>
+
+    <select #activo="ngModel" name="activo" [(ngModel)]="persona.activo" required>
+      <option *ngFor="let item of listEstado" [ngValue]="item.id">{{ item.value }}</option>
+    </select>
+    <span *ngIf="activo.invalid && activo.touched" style="color:red"> Este campo es obligatorio </span>
+  </p>
+  <p>
+    <input type="button" value="Llamar servicio GET" (click)="llamarServicio()">
+    <input type="button" value="Llamar servicio POST" (click)="llamarServicioPOST()">
+  </p>
+  <button (click)="enviarFormulario()" [disabled]="formulario.invalid" type="submit">Submit</button>
+  {{persona | json}}
+  {{listPersona | json}}
+</form>
+
+
+<!-- <router-outlet></router-outlet> -->
